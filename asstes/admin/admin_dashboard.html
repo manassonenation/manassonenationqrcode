@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Membership System</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script src="assets/js/qrcode.min.js"></script>
+    <!-- Add this to your HTML file, preferably in the <head> section -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/Styles.css">
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h1>
+                <i class="fas fa-tachometer-alt"></i> Admin Dashboard
+            </h1>
+            <div class="dashboard-actions">
+                <button class="btn-secondary" onclick="window.location.href='/'">
+                    <i class="fas fa-arrow-left"></i> Back to Generator
+                </button>
+                <button class="btn-danger logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+        
+        <div class="dashboard-content">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon members">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalMembers">0</h3>
+                        <p>Total Members</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon expiring">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="expiringSoon">0</h3>
+                        <p>Expiring Soon (30 days)</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon inactive">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="expiredMembers">0</h3>
+                        <p>Expired Members</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #3b82f6, #60a5fa);">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="activeMembers">0</h3>
+                        <p>Active Members</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="members-table-container">
+                <div class="table-header">
+                    <h2><i class="fas fa-list"></i> All Members</h2>
+                    <div class="table-actions">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchInput" placeholder="Search members...">
+                        </div>
+                        <button class="btn-primary" id="refreshBtn">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                        <div class="export-options">
+                            <button class="btn-secondary export-btn">
+                                <i class="fas fa-download"></i> Export
+                            </button>
+                            <div class="export-dropdown">
+                                <button class="export-option" data-format="csv">
+                                    <i class="fas fa-file-csv"></i> CSV
+                                </button>
+                                <button class="export-option" data-format="json">
+                                    <i class="fas fa-file-code"></i> JSON
+                                </button>
+                                <button class="export-option" data-format="pdf">
+                                    <i class="fas fa-file-pdf"></i> PDF
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <table class="members-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Member</th>
+                            <th>ID</th>
+                            <th>Rank</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>State</th>
+                            <th>Registered</th>
+                            <th>Expires</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="membersTableBody">
+                        <tr>
+                            <td colspan="11" style="text-align: center; padding: 40px;">
+                                <i class="fas fa-users" style="font-size: 3rem; color: #cbd5e1; margin-bottom: 15px; display: block;"></i>
+                                <p style="color: #64748b;">Loading members...</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="pagination">
+                    <button class="pagination-btn" id="prevBtn" disabled>
+                        <i class="fas fa-chevron-left"></i> Previous
+                    </button>
+                    <span class="pagination-info" id="pageInfo">Page 1 of 1</span>
+                    <button class="pagination-btn" id="nextBtn" disabled>
+                        Next <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Member Details Modal -->
+    <div class="modal" id="memberModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-user"></i> Member Details</h3>
+                <button class="modal-close" id="closeMemberModal">&times;</button>
+            </div>
+            <div class="modal-body" id="memberModalBody">
+                <!-- Content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmModal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3><i class="fas fa-exclamation-triangle"></i> Confirm Action</h3>
+                <button class="modal-close" id="closeConfirmModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="confirmMessage">Are you sure you want to perform this action?</p>
+            </div>
+            <div class="modal-footer" style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button class="btn-secondary" id="cancelConfirm">Cancel</button>
+                <button class="btn-danger" id="confirmAction">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/admin.js"></script>
+</body>
+</html>

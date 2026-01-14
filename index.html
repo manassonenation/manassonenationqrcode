@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manass one nation QR Code Generator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script src="assets/js/qrcode.min.js"></script>
+        <!-- Add this to your HTML file, preferably in the <head> section -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <link rel="stylesheet" href="./asstes/css/Styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <img src="../asstes/images/002.png" alt="manass-logo" class="n">
+                    <h1>Membership QR Code Generator</h1>
+                </div>
+                <p class="subtitle">Create a QR code with all member details including photo and guarantor information</p>
+                <div class="header-actions">
+                    <!-- Change this line in the header -->
+<a href="./asstes/admin/admin.html" class="admin-btn">
+    <i class="fas fa-user-shield"></i>Admin Panel
+</a>
+                    <button class="help-btn" id="helpBtn">
+                        <i class="fas fa-question-circle"></i> Help
+                    </button>
+                </div>
+            </div>
+        </header>
+        
+        <div class="main-content">
+            <div class="form-container">
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-user"></i> Personal Information
+                    </h2>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="memberId" class="required">Member ID</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-id-badge"></i>
+                                <select id="memberId">
+                                    <option value="">Select Member ID</option>
+                                    <!-- Options will be populated by JavaScript -->
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="firstName" class="required">First Name</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-signature"></i>
+                                <input type="text" id="firstName" placeholder="Enter first name">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="lastName" class="required">Last Name</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-signature"></i>
+                                <input type="text" id="lastName" placeholder="Enter last name">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="middleName">Middle Name (Optional)</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-signature"></i>
+                                <input type="text" id="middleName" placeholder="Enter middle name">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="gender" class="required">Gender</label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="gender" value="male">
+                                    <span class="radio-checkmark">
+                                        <i class="fas fa-male"></i>
+                                    </span>
+                                    <span class="radio-label">Male</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="gender" value="female">
+                                    <span class="radio-checkmark">
+                                        <i class="fas fa-female"></i>
+                                    </span>
+                                    <span class="radio-label">Female</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="dob" class="required">Date of Birth</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                                <input type="date" id="dob">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bloodGroup" class="required">Blood Group</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-tint"></i>
+                                <select id="bloodGroup">
+                                    <option value="">Select blood group</option>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
+                                    <option value="AS">AS (Sickle Cell)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email" class="required">Email Address</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="email" placeholder="Enter email address">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-address-book"></i> Contact Information
+                    </h2>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone" class="required">Phone Number</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-phone"></i>
+                                <input type="tel" id="phone" placeholder="Enter phone number">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="nin" class="required">National Identity Number (NIN)</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-id-card"></i>
+                                <input type="tel" id="nin" placeholder="Enter NIN">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="address" class="required">Address</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-home"></i>
+                            <input type="text" id="address" placeholder="Enter full address">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="state" class="required">State of Origin</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <select id="state">
+                                    <option value="">Select State</option>
+                                    <option value="Abia">Abia</option>
+                                    <option value="Adamawa">Adamawa</option>
+                                    <option value="Akwa Ibom">Akwa Ibom</option>
+                                    <option value="Anambra">Anambra</option>
+                                    <option value="Bauchi">Bauchi</option>
+                                    <option value="Bayelsa">Bayelsa</option>
+                                    <option value="Benue">Benue</option>
+                                    <option value="Borno">Borno</option>
+                                    <option value="Cross River">Cross River</option>
+                                    <option value="Delta">Delta</option>
+                                    <option value="Ebonyi">Ebonyi</option>
+                                    <option value="Edo">Edo</option>
+                                    <option value="Ekiti">Ekiti</option>
+                                    <option value="Enugu">Enugu</option>
+                                    <option value="FCT">Federal Capital Territory</option>
+                                    <option value="Gombe">Gombe</option>
+                                    <option value="Imo">Imo</option>
+                                    <option value="Jigawa">Jigawa</option>
+                                    <option value="Kaduna">Kaduna</option>
+                                    <option value="Kano">Kano</option>
+                                    <option value="Katsina">Katsina</option>
+                                    <option value="Kebbi">Kebbi</option>
+                                    <option value="Kogi">Kogi</option>
+                                    <option value="Kwara">Kwara</option>
+                                    <option value="Lagos">Lagos</option>
+                                    <option value="Nasarawa">Nasarawa</option>
+                                    <option value="Niger">Niger</option>
+                                    <option value="Ogun">Ogun</option>
+                                    <option value="Ondo">Ondo</option>
+                                    <option value="Osun">Osun</option>
+                                    <option value="Oyo">Oyo</option>
+                                    <option value="Plateau">Plateau</option>
+                                    <option value="Rivers">Rivers</option>
+                                    <option value="Sokoto">Sokoto</option>
+                                    <option value="Taraba">Taraba</option>
+                                    <option value="Yobe">Yobe</option>
+                                    <option value="Zamfara">Zamfara</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="rank" class="required">Member Rank</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-star"></i>
+                                <select id="rank">
+                                    <option value="">Select rank</option>
+                                    <option value="CHAIRMAN">CHAIRMAN</option>
+                                    <option value="P.R.O">P.R.O</option>
+                                    <option value="OC MORA">OC MORA</option>
+                                    <option value="PARADE/COMMANDER">PARADE/COMMANDER</option>
+                                    <option value="TRAINING/COMMANDER">TRAINING/COMMANDER</option>
+                                    <option value="INSTRUCTOR">INSTRUCTOR</option>
+                                    <option value="G/COMMANDER">G/COMMANDER</option>
+                                    <option value="MEMBER">MEMBER</option>
+                                    <option value="MEMBER COORDINATOR">MEMBER COORDINATOR</option>
+                                    <option value="SPECIAL ADVISER">SPECIAL ADVISER</option>
+                                    <option value="VICE CHAIRMAN">VICE CHAIRMAN</option>
+                                    <option value="SECRETARY">SECRETARY</option>
+                                    <option value="TREASURER">TREASURER</option> 
+                                    <option value=">MANASS POLICE">MANASS POLICE</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-user-friends"></i> Guarantor Information
+                    </h2>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="guarantorName" class="required">Guarantor Full Name</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-user-check"></i>
+                                <input type="text" id="guarantorName" placeholder="Enter guarantor's full name">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="guarantorPhone" class="required">Guarantor Phone Number</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-phone-alt"></i>
+                                <input type="tel" id="guarantorPhone" placeholder="Enter guarantor's phone number">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section member-photo-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-camera"></i> Member Photo
+                    </h2>
+                    
+                    <div class="photo-upload-container">
+                        <div class="photo-upload-area" id="photoUploadArea">
+                            <div class="upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <div class="upload-text">
+                                <p>Click to upload member photo</p>
+                                <p class="upload-subtext">JPG, PNG or GIF (Max: 2MB)</p>
+                            </div>
+                            <input type="file" id="memberPhoto" accept="image/*" hidden>
+                        </div>
+                        
+                        <div class="photo-preview-container">
+                            <div class="photo-frame">
+                                <img id="photoPreview" class="photo-preview" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23f0f0f0'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='16' fill='%23999'%3ENo Photo%3C/text%3E%3C/svg%3E" alt="Photo Preview">
+                                <div class="photo-overlay">
+                                    <button class="change-photo-btn" id="changePhotoBtn">
+                                        <i class="fas fa-sync-alt"></i> Change
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="photo-instruction">Passport size photo recommended</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="preview-section">
+                <div class="qr-container">
+                    <h3 class="qr-title">
+                        <i class="fas fa-qrcode"></i> QR Code Preview
+                    </h3>
+                    <div class="qr-code-display">
+                        <div id="qrcode"></div>
+                        <div class="qr-info">
+                            <p><i class="fas fa-info-circle"></i> Scan this QR code to verify membership</p>
+                            <p class="qr-expiry">Valid for 5 years from registration</p>
+                        </div>
+                    </div>
+                    
+                    <div class="member-card-preview">
+                        <div class="card-header">
+                            <div class="card-logo">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Membership Card</span>
+                            </div>
+                            <div class="card-status active">ACTIVE</div>
+                        </div>
+                        
+                        <div class="card-body">
+                            <div class="card-photo">
+                                <img id="cardPhotoPreview" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23e0e0e0'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='12' fill='%23999'%3EPhoto%3C/text%3E%3C/svg%3E" alt="Member Photo">
+                            </div>
+                            
+                            <div class="card-details">
+                                <div class="card-row">
+                                    <span class="card-label">ID:</span>
+                                    <span class="card-value" id="card-id">-</span>
+                                </div>
+                                <div class="card-row">
+                                    <span class="card-label">Name:</span>
+                                    <span class="card-value" id="card-name">-</span>
+                                </div>
+                                <div class="card-row">
+                                    <span class="card-label">Rank:</span>
+                                    <span class="card-value" id="card-rank">-</span>
+                                </div>
+                                <div class="card-row">
+                                    <span class="card-label">Phone:</span>
+                                    <span class="card-value" id="card-phone">-</span>
+                                </div>
+                                <div class="card-row">
+                                    <span class="card-label">Valid Until:</span>
+                                    <span class="card-value expiry-date" id="card-expiry">-</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card-footer">
+                            <div class="card-qr-small">
+                                <div id="cardQr"></div>
+                            </div>
+                            <div class="card-signature">
+                                <div class="signature-line"></div>
+                                <p>Authorized Signature</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="preview-card">
+                    <h3>
+                        <i class="fas fa-list-alt"></i> Data Preview
+                    </h3>
+                    <div class="preview-grid">
+                        <div class="preview-item"><strong>ID:</strong> <span id="preview-id">-</span></div>
+                        <div class="preview-item"><strong>Name:</strong> <span id="preview-name">-</span></div>
+                        <div class="preview-item"><strong>Gender:</strong> <span id="preview-gender">-</span></div>
+                        <div class="preview-item"><strong>DOB:</strong> <span id="preview-dob">-</span></div>
+                        <div class="preview-item"><strong>Blood Group:</strong> <span id="preview-blood">-</span></div>
+                        <div class="preview-item"><strong>Email:</strong> <span id="preview-email">-</span></div>
+                        <div class="preview-item"><strong>Phone:</strong> <span id="preview-phone">-</span></div>
+                        <div class="preview-item"><strong>NIN:</strong> <span id="preview-nin">-</span></div>
+                        <div class="preview-item"><strong>Address:</strong> <span id="preview-address">-</span></div>
+                        <div class="preview-item"><strong>State:</strong> <span id="preview-state">-</span></div>
+                        <div class="preview-item"><strong>Rank:</strong> <span id="preview-rank">-</span></div>
+                        <div class="preview-item"><strong>Guarantor:</strong> <span id="preview-guarantor">-</span></div>
+                        <div class="preview-item"><strong>Guarantor Phone:</strong> <span id="preview-guarantor-phone">-</span></div>
+                        <div class="preview-item"><strong>Registered:</strong> <span id="preview-registered">-</span></div>
+                        <div class="preview-item"><strong>Expires:</strong> <span id="preview-expiry">-</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="loading-content">
+                <div class="loading-spinner"></div>
+                <p>Processing...</p>
+            </div>
+        </div>
+        
+        <div class="action-buttons">
+            <button id="clearBtn" class="btn-secondary">
+                <i class="fas fa-trash-alt"></i> Clear Form
+            </button>
+            <button id="generateBtn" class="btn-primary">
+                <i class="fas fa-qrcode"></i> Generate QR Code
+            </button>
+            <button id="saveBtn" class="btn-success" disabled>
+                <i class="fas fa-save"></i> Save Member
+            </button>
+            <button id="downloadBtn" class="btn-download" disabled>
+                <i class="fas fa-download"></i> Download QR Code
+            </button>
+            <button id="printBtn" class="btn-print" disabled>
+                <i class="fas fa-print"></i> Print Card
+            </button>
+        </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div class="modal" id="helpModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-question-circle"></i> Help & Instructions</h3>
+                <button class="modal-close" id="closeHelpModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="help-section">
+                    <h4><i class="fas fa-info-circle"></i> How to Use</h4>
+                    <ol>
+                        <li>Fill in all required fields marked with *</li>
+                        <li>Upload a clear passport-sized photo</li>
+                        <li>Click "Generate QR Code" to preview</li>
+                        <li>Click "Save Member" to store in database</li>
+                        <li>Download or Print the QR code</li>
+                    </ol>
+                </div>
+                <div class="help-section">
+                    <h4><i class="fas fa-key"></i> Admin Access</h4>
+                    <p>Use the Admin Panel to:</p>
+                    <ul>
+                        <li>View all registered members</li>
+                        <li>Edit member information</li>
+                        <li>Delete members</li>
+                        <li>Export member data</li>
+                    </ul>
+                </div>
+                <div class="help-section">
+                    <h4><i class="fas fa-shield-alt"></i> Security Notes</h4>
+                    <ul>
+                        <li>All data is stored locally in your browser</li>
+                        <li>QR codes expire after 5 years</li>
+                        <li>Keep member IDs confidential</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Add this to your HTML file -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script src="./asstes/js/index.js"></script>
+    <script src="./asstes/js/index.js"></script>
+</body>
+</html>
